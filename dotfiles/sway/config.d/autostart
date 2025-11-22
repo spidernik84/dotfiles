@@ -1,0 +1,2 @@
+exec_always --no-startup-id gammastep -l 59.3283578:18.0648742
+exec --no-startup-id kanshi
