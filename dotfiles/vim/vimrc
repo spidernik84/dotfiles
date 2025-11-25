@@ -1,0 +1,185 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set syntax=on
+set cursorline
+set guifont=JetBrainsMono-ExtraLight:h14
+set mouse=a
+
+" Put macros on Q (stop butterfingering macro activate)
+noremap Q q
+
+set nu
+set relativenumber " Context-aware Relative line numbering
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
+"Tab let you go to the next buffer and a Shift-Tab to the previous.
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+" Use ctrl-[hjkl] to select the active split!
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/opt/homebrew/opt/fzf
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-commentary'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'altercation/vim-colors-solarized'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'jvirtanen/vim-hcl'
+Plugin 'dense-analysis/ale'
+Plugin 'junegunn/goyo.vim'
+Plugin 'mbbill/undotree'
+"Plugin 'junegunn/limelight.vim'
+"Plugin 'junegunn/seoul256.vim'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'subnut/vim-iawriter'
+Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'artanikin/vim-synthwave84'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-surround.git'
+Plugin 'glench/vim-jinja2-syntax'
+Plugin 'sainnhe/everforest'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'dracula/vim'
+Plugin 'preservim/nerdtree'
+Plugin 'hashivim/vim-terraform'
+Plugin 'zenbones-theme/zenbones.nvim'
+" LSP
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'mattn/vim-lsp-settings'
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+" " /LSP
+Plugin 'dhruvasagar/vim-zoom'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+
+" dark mode enabled?
+" if system("defaults read -g AppleInterfaceStyle") =~ '^Dark'
+"    colorscheme tokyobones
+"    set background=dark
+" else
+"   set background=light
+"   colorscheme tokyobones
+" endif
+set background=dark
+colorscheme tokyobones
+
+" colorscheme synthwave84
+
+" if strftime("%H") < 12
+"   set background=light
+" else
+"   set background=dark
+" endif
+
+" colorscheme nord
+set hidden         " Change buffer without having to save right away
+set splitright     " Open vertical split to the right of current file
+set lazyredraw     " Only redraws at end of macro/paste/nontyped command (for performance)
+set wildmenu       " This shows suggestions in statusbar on tab
+set undofile       " Persistent undos between vim sessions
+set undodir=$HOME/.vim/undo//
+
+
+" This gives you a bar cursor in insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+" Draw a better cursor for insert mode
+autocmd InsertEnter,InsertLeave * set cul!
+
+" Restore last position of previously closed file
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+""" LSP autocomplete
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"
+" inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" configure expanding of tabs for various file types
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.c set expandtab
+au BufRead,BufNewFile *.h set expandtab
+au BufRead,BufNewFile Makefile* set noexpandtab
+
+" configure editor with tabs and nice stuff...
+set expandtab           " enter spaces when tab is pressed
+set textwidth=120       " break lines when line length increases
+set tabstop=4           " use 4 spaces to represent tab
+set softtabstop=4
+set shiftwidth=4        " number of spaces to use for auto indent
+set autoindent          " copy indent from current line when starting a new
+
+" make backspaces more powerful
+set backspace=indent,eol,start
+
+" Nerdtree
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <F2> :NERDTreeToggle<cr>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+" Undotree
+nnoremap <F5> :UndotreeToggle<CR>
+
+"" Remaps
+" esc in insert mode
+inoremap kj <esc>
+inoremap jk <esc>
+
+" esc in command mode
+cnoremap jk <C-C>
+cnoremap kj <C-C>
+" Note: In command mode mappings to esc run the command for some odd
+" historical vi compatibility reason. We use the alternate method of
+" existing which is Ctrl-C
+
+let g:airline_powerline_fonts = 1
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='tomorrow'
