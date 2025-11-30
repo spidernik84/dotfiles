@@ -3,6 +3,9 @@ exec --no-startup-id kanshi
 exec --no-startup-id ~/.config/toshy/scripts/XDG-Autostart-processor.sh #Toshy autostart
 exec ~/.config/sway/scripts/azotebg
 
+# Necessary to make Plasma/KDE apps pick up default files associations/mimetypes
+exec XDG_MENU_PREFIX=arch- kbuildsycoca6
+
 # cliphist
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
