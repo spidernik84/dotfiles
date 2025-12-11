@@ -65,6 +65,7 @@ Plugin 'dracula/vim'
 Plugin 'preservim/nerdtree'
 Plugin 'hashivim/vim-terraform'
 Plugin 'zenbones-theme/zenbones.nvim'
+Plugin 'rktjmp/lush.nvim'
 " LSP
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'mattn/vim-lsp-settings'
@@ -94,32 +95,15 @@ if has('termguicolors')
   set termguicolors
 endif
 
-" dark mode enabled?
-" if system("defaults read -g AppleInterfaceStyle") =~ '^Dark'
-"    colorscheme tokyobones
-"    set background=dark
-" else
-"   set background=light
-"   colorscheme tokyobones
-" endif
 set background=dark
 colorscheme tokyobones
 
-" colorscheme synthwave84
-
-" if strftime("%H") < 12
-"   set background=light
-" else
-"   set background=dark
-" endif
-
-" colorscheme nord
 set hidden         " Change buffer without having to save right away
 set splitright     " Open vertical split to the right of current file
 set lazyredraw     " Only redraws at end of macro/paste/nontyped command (for performance)
 set wildmenu       " This shows suggestions in statusbar on tab
 set undofile       " Persistent undos between vim sessions
-set undodir=$HOME/.vim/undo//
+set undodir=$HOME/.vim/undo/
 
 
 " This gives you a bar cursor in insert mode
@@ -159,10 +143,13 @@ set backspace=indent,eol,start
 
 " Nerdtree
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <F2> :NERDTreeToggle<cr>
+nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if winnr() == winnr('h') && bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+            \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
 
 " Undotree
 nnoremap <F5> :UndotreeToggle<CR>
