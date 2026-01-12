@@ -12,9 +12,7 @@ case $SELECTION in
     *"󰌾 Lock"*)
         swaylock -f -i ~/.config/sway/EndeavourOS_SpaceStation__3840x2160.png -c 000000  && sleep 1;;
     *"󰤄 Suspend"*)
-        if confirm_action "Suspend"; then
-            systemctl suspend
-        fi;;
+        systemctl suspend;;
     *"󰤄 Hibernate"*)
         if confirm_action "Hibernate"; then
             systemctl hibernate
