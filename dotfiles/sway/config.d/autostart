@@ -1,5 +1,6 @@
 exec_always --no-startup-id gammastep -l 59.3283578:18.0648742
 exec --no-startup-id kanshi
+exec --no-startup-id dunst
 exec --no-startup-id ~/.config/toshy/scripts/XDG-Autostart-processor.sh #Toshy autostart
 exec ~/.config/sway/scripts/azotebg
 

@@ -18,6 +18,12 @@ set $right l
 set $term kitty
 # Your preferred application launcher
 set $menu rofi -show combi -combi-modi "drun,window,windowcd" -modi combi
+# set $menu rofi -show combi -combi-modi "drun,window,windowcd" -modi combi
+set $omnisearch rofi -modi "Global Search":"~/Apps/rofi-spotlight/rofi-spotlight.sh" -show "Global Search" 
+
+# Wob for OSD
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
 
 set $bg ~/.config/sway/EndeavourOS_SpaceStation__3840x2160.png
@@ -31,9 +37,11 @@ bindsym $mod+shift+m output "eDP-1" enable
 #
 # Example configuration:
 #
-exec swayidle -w \
-         timeout 300 'swaylock -i $bg -f -c 000000' \
-         timeout 120 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+exec_always killall -9 swayidle && swayidle -w \
+         timeout 300 'swaylock -i $bg -f --fade-in 5 --grace 10 -c 000000' \
+         timeout 360 'swaymsg "output * power off"' \
+         resume 'swaymsg "output * power on"' \
+         timeout 1800 'systemctl suspend-then-hibernate' \
          before-sleep 'swaylock -i $bg -f -c 000000'
 
 
@@ -54,6 +62,7 @@ focus_on_window_activation focus
 
     # Start your launcher
     bindsym $mod+d exec $menu
+    bindsym $mod+shift+d exec $omnisearch
     # bindsym Control+space exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -65,6 +74,11 @@ focus_on_window_activation focus
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
+
+    # Macbook keyboard brightness control
+    bindsym XF86KbdBrightnessUp exec light -s sysfs/leds/smc::kbd_backlight -A 10 && light -s sysfs/leds/smc::kbd_backlight -G | cut -d'.' -f1 > $WOBSOCK
+    bindsym XF86KbdBrightnessDown exec light -s sysfs/leds/smc::kbd_backlight -U 10 && light -s sysfs/leds/smc::kbd_backlight -G | cut -d'.' -f1 > $WOBSOCK
+
 
 #
 # Moving around:
@@ -184,17 +198,19 @@ bindsym $mod+r mode "resize"
 #
 # Utilities:
 #
-    # Special keys to adjust volume via PulseAudio
-    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
-    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
-    # Special keys to adjust brightness via brightnessctl
-    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 2%-
-    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 2%+
-    # Special key to take a screenshot with grim
-    bindsym $mod+shift+o exec slurp | grim -g - ~/Pictures/Screenshots/screenshot-area-$(date +%s).png
-    bindsym $mod+shift+p exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Pictures/Screenshots/screenshot-$(date +%s).png
+# Special keys to adjust volume via PulseAudio
+bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle && ( [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ] && echo 0 > $WOBSOCK ) || pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
+
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
+
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+# Special keys to adjust brightness via brightnessctl
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 2%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 2%+ | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+# Special key to take a screenshot with grim
+bindsym $mod+shift+o exec slurp | grim -g - ~/Pictures/Screenshots/screenshot-area-$(date +%s).png
+bindsym $mod+shift+p exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - ~/Pictures/Screenshots/screenshot-$(date +%s).png
 
 
 # Power Menu
