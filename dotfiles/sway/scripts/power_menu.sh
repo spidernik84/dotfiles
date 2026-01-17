@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# pick background as input parameter
+BG=$1
+
 SELECTION="$(printf "󰌾 Lock\n󰤄 Suspend\n󰤄 Hibernate\n󰍃 Log out\n Reboot\n Reboot to UEFI\n󰐥 Shutdown" | fuzzel --dmenu -l 7 -w 20 -p "Select an option: ")"
 
 confirm_action() {
@@ -10,7 +13,7 @@ confirm_action() {
 
 case $SELECTION in
     *"󰌾 Lock"*)
-        swaylock -f -i ~/.config/sway/EndeavourOS_SpaceStation__3840x2160.png -c 000000  && sleep 1;;
+        swaylock -f -i $BG -c 000000  && sleep 1;;
     *"󰤄 Suspend"*)
         systemctl suspend;;
     *"󰤄 Hibernate"*)
