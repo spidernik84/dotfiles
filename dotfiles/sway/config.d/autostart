@@ -1,7 +1,22 @@
-exec_always --no-startup-id gammastep -l 59.3283578:18.0648742
+# Screen tint based on hour of the day
+exec --no-startup-id gammastep -l 59.3283578:18.0648742
+
+# Kanshi for hdmi external monitor autodetection
 exec --no-startup-id kanshi
-exec --no-startup-id dunst
+
+# Toshy for mac keybindings
 exec --no-startup-id ~/.config/toshy/scripts/XDG-Autostart-processor.sh #Toshy autostart
+
+# exec --no-startup-id dunst
+exec --no-startup-id mako
+exec --no-startup-id kwalletd6
+exec --no-startup-id /usr/lib/pam_kwallet_init
+exec --no-startup-id /opt/KopiaUI/kopia-ui --password-store="kwallet6"
+exec --no-startup-id maestral start
+exec --no-startup-id nm-applet --indicator
+
+# KDE Policykit daemon start
+exec_always --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 
 # Necessary to make Plasma/KDE apps pick up default files associations/mimetypes
 exec XDG_MENU_PREFIX=arch- kbuildsycoca6

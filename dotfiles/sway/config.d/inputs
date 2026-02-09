@@ -14,6 +14,6 @@ input type:pointer {
 input * {
     xkb_layout "us,it,se"
     # xkb_variant "colemak,,typewriter"
-    xkb_options "grp:ctrl_space_toggle"
-    repeat_delay 200
+    # xkb_options "grp:ctrl_space_toggle"
+    repeat_delay 250
 }

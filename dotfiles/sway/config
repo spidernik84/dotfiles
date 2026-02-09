@@ -17,21 +17,29 @@ set $right l
 # Your preferred terminal emulator
 set $term kitty
 # Your preferred application launcher
-set $menu rofi -show combi -combi-modi "drun,window,windowcd" -modi combi
+set $menu rofi -show combi -combi-modi "drun" -modi combi
+set $windowsearch rofi -show combi -combi-modi "window,windowcd" -modi combi
 # set $menu rofi -show combi -combi-modi "drun,window,windowcd" -modi combi
 set $omnisearch rofi -modi "Global Search":"~/Apps/rofi-spotlight/rofi-spotlight.sh" -show "Global Search" 
 
 # Wob for OSD
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
-exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+exec_always rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
 
 set $bg ~/.config/sway/wallpaper/current.jpg
+exec swaybg -i $bg -m fill
 
-exec_always pkill swaybg; swaybg -i $bg -m fill
+# Move workspace to other display
+bindsym $mod+shift+x move workspace output down
 
-bindsym $mod+shift+x move workspace to output down
 
+# Switch layout and trigger mako OSD notification. Double byndsym to account for Toshy different behavior between
+# terminal and other apps
+bindsym ctrl+space exec swaymsg input 'type:keyboard' xkb_switch_layout next && notify-send -t 1000 -a 'keyb' " $(swaymsg -t get_inputs | jq 'map(select(has("xkb_active_layout_name")))[0].xkb_active_layout_name')"
+bindsym super+space exec swaymsg input 'type:keyboard' xkb_switch_layout next && notify-send -t 1000 -a 'keyb' " $(swaymsg -t get_inputs | jq 'map(select(has("xkb_active_layout_name")))[0].xkb_active_layout_name')"
+
+# External display off/on
 bindsym $mod+m output "eDP-1" disable
 bindsym $mod+shift+m output "eDP-1" enable
 
@@ -39,7 +47,7 @@ bindsym $mod+shift+m output "eDP-1" enable
 #
 # Example configuration:
 #
-exec_always killall -9 swayidle; swayidle -w \
+exec swayidle -w \
          timeout 300 'swaylock -i $bg -f --fade-in 5 --grace 10 -c 000000' \
          timeout 360 'swaymsg "output * power off"' \
          resume 'swaymsg "output * power on"' \
@@ -65,6 +73,8 @@ focus_on_window_activation focus
     # Start your launcher
     bindsym $mod+d exec $menu
     bindsym $mod+shift+d exec $omnisearch
+    bindsym $mod+shift+w exec $windowsearch
+
     # bindsym Control+space exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -221,14 +231,7 @@ bindsym $mod+Shift+e exec $powermenu
 # Bind hw power button to powermenu
 bindsym XF86PowerOff exec $powermenu
 
-
 # Startup apps
-exec --no-startup-id kwalletd6
-exec --no-startup-id /usr/lib/pam_kwallet_init
-exec --no-startup-id /opt/KopiaUI/kopia-ui --password-store="kwallet6"
-exec --no-startup-id maestral start
-exec wl-paste -t text --watch clipman store --no-persist
-exec --no-startup-id nm-applet --indicator
 
 # includes
 include ~/.config/sway/config.d/*
@@ -243,7 +246,7 @@ position bottom
 
 
 # Launch the clipboard manager
-bindsym $mod+Ctrl+v exec cliphist list | fuzzel -d -w 20 -l 15 -p "Select an entry to copy it to your clipboard buffer:"| cliphist decode | wl-copy
+bindsym $mod+shift+v exec cliphist list | fuzzel -d -w 20 -l 15 -p "Select an entry to copy it to your clipboard buffer:"| cliphist decode | wl-copy
 # Delete an entry from the clipboard manager
 bindsym $mod+Ctrl+x exec cliphist list | fuzzel -d -w 20 -l 15 -t cc9393ff -S cc9393ff -p "Select an entry to delete it from cliphist:"| cliphist delete
 # Note: you can clear all cliphist entries by running `cliphist wipe`
