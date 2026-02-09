@@ -1,5 +1,9 @@
 enable_audio_bell no
 
+
+# Allow autocomplete after sudo
+shell_integration no-sudo
+
 tab_bar_style powerline
 tab_powerline_style slanted
 tab_title_template      "{index}: {title}"
@@ -36,8 +40,12 @@ macos_menubar_title_max_length 40
 
 scrollback_lines 6000
 
+# Make touchpad scrolling faster
+touch_scroll_multiplier 15.0
+
 window_padding_width 2
 
+# Send OS notification when command running on unfocused window finishes
 notify_on_cmd_finish unfocused
 
 # BEGIN_KITTY_THEME
@@ -49,7 +57,7 @@ window_margin_width     2
 window_border_width     1pt
 
 # BEGIN_KITTY_FONTS
-font_family      family="Hack Nerd Font Mono"
+font_family      family="Iosevka Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
