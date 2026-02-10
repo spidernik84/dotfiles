@@ -107,13 +107,13 @@
             "warning": 70,
             "critical": 90,
         },
-        "on-click": "footclient -T waybar_htop -e htop"
+        "on-click": "kitty -T waybar_htop -e btop"
     },
     
     "memory": {
         "interval": 30,
-        "format": " {:>3}%",
-        "on-click": "footclient -T waybar_htop -e htop", 
+        "format": "{:>3}%",
+        "on-click": "kitty -T waybar_htop -e btop", 
         "states": {
             "warning": 70,
             "critical": 90
@@ -149,7 +149,7 @@
             "warning": 15,
             "critical": 10
         },
-        "format": "{icon}  {capacity}%",
+        "format": "{icon} {capacity}%",
         "format-icons": ["", "", "", "", ""]
     },
     "bluetooth": {
@@ -160,7 +160,8 @@
 	"tooltip-format": "{controller_alias}\t{controller_address}",
 	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
 	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "on-click": "if bluetoothctl show | grep -q 'PowerState: off'; then bluetoothctl power on; else bluetoothctl power off; fi"
+    "on-click-right": "if bluetoothctl show | grep -q 'PowerState: off'; then bluetoothctl power on; else bluetoothctl power off; fi",
+    "on-click": "kitty -T waybar_btctl -e bluetui"
 },
 
     "clock": {

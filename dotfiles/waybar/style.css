@@ -65,9 +65,9 @@ window#waybar.hidden {
     /* border-radius: 4px; */
 }
 
-#battery.charging{
-    background-color: #b5b4e2;
-}
+/* #battery.charging{ */
+/*     background-color: #b5b4e2; */
+/* } */
 
 #battery.critical:not(.charging) {
     background-color: #b54f4f;

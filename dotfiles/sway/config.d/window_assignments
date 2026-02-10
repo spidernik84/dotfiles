@@ -1,5 +1,4 @@
 assign [app_id="firefox"] 1
-assign [app_id="kitty"] 2
 assign [app_id="obsidian"] 5
 assign [app_id="org.mozilla.Thunderbird"] 9
 assign [app_id="signal"] 10
