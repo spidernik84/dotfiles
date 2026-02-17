@@ -15,7 +15,7 @@ case $SELECTION in
     *"󰌾 Lock"*)
         swaylock -f -i $BG -c 000000  && sleep 1;;
     *"󰤄 Suspend"*)
-        systemctl suspend;;
+        systemctl suspend-then-hibernate;;
     *"󰤄 Hibernate"*)
         if confirm_action "Hibernate"; then
             systemctl hibernate

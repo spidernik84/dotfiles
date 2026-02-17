@@ -39,6 +39,7 @@ window#waybar.hidden {
 #clock,
 #battery,
 #cpu,
+#custom-fan,
 #memory,
 #backlight,
 #network,
@@ -85,7 +86,6 @@ window#waybar.hidden {
     background-color: #b54f4f;
 }
 
-#idle_inhibitor.deactivated, 
 #bluetooth.off,
 #pulseaudio.muted {
     background-color: #3b3f51;
@@ -111,7 +111,7 @@ window#waybar.hidden {
     /* background-color: #b5b4e2; */ 
     color: #ad66f9;
 }
-#custom-dnd.do-not-disturb {
+#custom-dnd.mode.do-not-disturb{
     /* background-color: #b5b4e2; */ 
     color: #ad66f9;
 }

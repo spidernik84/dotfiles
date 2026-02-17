@@ -16,6 +16,7 @@ for_window [title="Picture in picture"] floating enable, sticky enable
 for_window [title="waybar_htop"] floating enable, resize set width 70 ppt height 70 ppt
 for_window [title="waybar_btctl"] floating enable, resize set width 70 ppt height 70 ppt
 for_window [title="waybar_nmtui"] floating enable
+for_window [app_id="com.saivert.pwvucontrol"] floating enable, resize set width 70 ppt height 70 ppt
 for_window [title="Save File"] floating enable
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] kill
 

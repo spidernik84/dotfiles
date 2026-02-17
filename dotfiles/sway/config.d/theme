@@ -5,7 +5,7 @@ exec_always ~/.config/sway/scripts/import-gsettings
 default_border pixel 1
 
 # Default Font
-font pango:Noto Sans Regular 10
+font pango:Noto Sans Regular 8
 
 # Thin borders:
 smart_borders on
