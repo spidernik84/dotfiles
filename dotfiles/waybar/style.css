@@ -1,9 +1,9 @@
 * {
     /* font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
-    /* font-family: JetBrainsMono; */
-    font-family: Hack Nerd Font;
+    font-family: Noto Sans Regular;
+    /* font-family: Hack Nerd Font; */
     /* font-family: IosevkaTerm Nerd Font Mono; */
-    font-size: 12px;
+    font-size: 10px;
     margin: 0;
     padding: 0;
     border: none;
@@ -52,13 +52,13 @@ window#waybar.hidden {
 #language,
 #bluetooth,
 #scratchpad {
-    padding: 5px 8px;
+    padding: 4px 4px 4px 4px;
     background-color: #3b3f51;
     color: #ffffff;
 }
 
 #clock {
-    min-width: 140px;
+    min-width: 120px;
     background: #3b3f51;
     color: #ffffff;
     background-color: rgba(43, 44, 52, 0.8);

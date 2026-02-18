@@ -103,7 +103,7 @@
 
 "custom/fan":{
   "exec": "/usr/local/bin/fanscript.sh",
-  "format": "󰈐 {text}",
+  "format": "󰈐  {text}",
   "interval": 5,
   "return-type": "json",
   "tooltip": false
@@ -111,7 +111,7 @@
 
     "cpu": {
         "interval": 5,
-        "format": "{usage:>3}%",
+        "format": " {usage:>3}%",
         "states": {
             "warning": 70,
             "critical": 90,
@@ -121,7 +121,7 @@
     
     "memory": {
         "interval": 30,
-        "format": "{:>3}%",
+        "format": " {:>3}%",
         "on-click": "kitty -T waybar_htop -e btop", 
         "states": {
             "warning": 70,
@@ -158,9 +158,12 @@
             "warning": 15,
             "critical": 10
         },
-        "format": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""]
-    },
+        "format": "{icon}  {capacity}%",
+     //   "format-icons": ["", "", "", "", ""]
+        "format-icons": {
+        "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+    },},
     "bluetooth": {
 	// "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
 	"format": "",
