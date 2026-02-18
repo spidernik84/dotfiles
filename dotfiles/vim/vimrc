@@ -3,7 +3,9 @@ filetype off                  " required
 set syntax=on
 set cursorline
 set guifont=JetBrainsMono-ExtraLight:h14
-set mouse=a
+
+" Disable mouse interaction
+set mouse=
 
 " Put macros on Q (stop butterfingering macro activate)
 noremap Q q
