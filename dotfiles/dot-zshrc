@@ -186,9 +186,10 @@ alias ff="fzf --preview 'case \$(file --mime-type -b {}) in image/*) kitty icat 
 
 alias eff='$EDITOR "$(ff)"'
 
+# use fd instead of find#
 
-export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}'"
-# use fd instead of find
+alias find='fd'
+
 export FZF_DEFAULT_COMMAND="fd --type f"
 
 # Get current playing track from Radio Paradise
