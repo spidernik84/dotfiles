@@ -4,7 +4,7 @@ exec --no-startup-id gammastep -l 59.3283578:18.0648742
 # Kanshi for hdmi external monitor autodetection
 exec --no-startup-id kanshi
 
-exec --no-startup-id autotiling
+#exec --no-startup-id autotiling
 
 # Toshy for mac keybindings
 exec --no-startup-id ~/.config/toshy/scripts/XDG-Autostart-processor.sh #Toshy autostart
