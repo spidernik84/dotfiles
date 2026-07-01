@@ -14,7 +14,6 @@ exec --no-startup-id mako
 exec --no-startup-id kwalletd6
 exec --no-startup-id /usr/lib/pam_kwallet_init
 #exec --no-startup-id /opt/KopiaUI/kopia-ui --password-store="kwallet6"
-exec --no-startup-id maestral start
 exec --no-startup-id nm-applet --indicator
 
 # KDE Policykit daemon start

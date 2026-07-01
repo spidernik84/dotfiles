@@ -72,7 +72,7 @@ window#waybar.hidden {
 
 #battery.critical:not(.charging) {
     background-color: #b54f4f;
-    animation: blink 0.5s linear infinite alternate;
+    /* animation: blink 0.5s linear infinite alternate; */
 }
 
 @keyframes blink {
